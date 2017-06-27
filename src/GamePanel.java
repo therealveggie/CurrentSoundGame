@@ -3,9 +3,10 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.util.ArrayList;
 
-public class GamePanel extends JPanel {
+public class GamePanel extends JPanel implements ActionListener, KeyListener{
 	static int[] x,y;
 	static ArrayList<ArrayList> bounds;
+	static Timer timer;
 	static Line [] lines;
 	char[] keys;
 	static Path[] paths;
@@ -24,7 +25,7 @@ public class GamePanel extends JPanel {
 		//end of temp code
 		
 		paths = new Path[6];
-		
+		timer = new Timer(60, this);
 		this.setBackground(Color.black);
 		this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
 		System.out.println(this.getWidth()+"     "+this.getHeight());
@@ -56,6 +57,8 @@ public class GamePanel extends JPanel {
 		{
 			paths[i]=new Path(lines[i],lines[i+1], keys[i],p1,p2);
 		}
+		addKeyListener(this);
+		timer.start();
 		//this.add(new MyCanvas());
 		
 	}
@@ -71,6 +74,42 @@ public class GamePanel extends JPanel {
 		{
 			path.drawPath(g);
 		}
+	}
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		System.out.println(e.getKeyChar());
+		for(int i=0; i<6;i++)
+		{
+			System.out.println(e.getKeyChar()+"\t"+keys[i]);
+			if (e.getKeyChar()==keys[i])
+			{
+				paths[i].interact();
+				
+			}
+		}
+	}
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		for(int i=0; i<6;i++)
+		{
+			if (e.getKeyChar()==keys[i])
+			{
+				paths[i].interact();
+			}
+		}
+	}
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		//System.out.println("repeat");
+		this.repaint();
 	}
 	
 
