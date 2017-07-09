@@ -57,6 +57,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 		{
 			paths[i]=new Path(lines[i],lines[i+1], keys[i],p1,p2);
 		}
+		this.setFocusable(true);
+		this.requestFocus();
+		System.out.println("doing this");
 		addKeyListener(this);
 		timer.start();
 		//this.add(new MyCanvas());
