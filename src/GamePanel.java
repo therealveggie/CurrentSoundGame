@@ -8,26 +8,29 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 	static ArrayList<ArrayList> bounds;
 	static Timer timer;
 	static Line [] lines;
-	char[] keys;
+	String[] keys;
 	static Path[] paths;
+	//@SuppressWarnings("deprecation")
 	public GamePanel()
 	{
+		addKeyListener(this);
 		//Temp code
 		
-		keys = new char[6];
-		keys[0]='s';
-		keys[1]='d';
-		keys[2]='f';
-		keys[3]='j';
-		keys[4]='k';
-		keys[5]='l';
+		keys = new String[6];
+		keys[0]="s";
+		keys[1]="d";
+		keys[2]="f";
+		keys[3]="j";
+		keys[4]="k";
+		keys[5]="l";
 		
 		//end of temp code
 		
 		paths = new Path[6];
 		timer = new Timer(60, this);
 		this.setBackground(Color.black);
-		this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
+		//this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
+		this.setSize(800,800);
 		System.out.println(this.getWidth()+"     "+this.getHeight());
 		//x= new int[4];
 		//y=new int [4];
@@ -39,6 +42,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 		int small_shift= (int)(this.getWidth()*0.1/6);
 		int large_shift = (int)(this.getWidth()/6);
 		ArrayList<Integer> temp;
+		PressedAction tmp;
 		//bounds= new ArrayList<ArrayList>();
 		for(int i=0;i<7;i++)
 		{
@@ -57,10 +61,22 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 		{
 			paths[i]=new Path(lines[i],lines[i+1], keys[i],p1,p2);
 		}
+		/*
+		for(int i=0;i<6;i++)
+		{
+			tmp = new PressedAction(i);
+			this.getInputMap().put(KeyStroke.getKeyStroke('a'), tmp);
+			//this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(keys[i].charAt(0), true), tmp);
+			//this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(keys[i].charAt(0), false), tmp);
+		}
+		*/
 		this.setFocusable(true);
-		this.requestFocus();
+		
 		System.out.println("doing this");
-		addKeyListener(this);
+		this.requestFocusInWindow();
+		System.out.println(this.isRequestFocusEnabled());
+		
+		
 		timer.start();
 		//this.add(new MyCanvas());
 		
@@ -79,13 +95,21 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 		}
 	}
 	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		//System.out.println("repeat");
+		this.repaint();
+	}
+	
+	
+	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println(e.getKeyChar());
+		System.out.println("a key was pressed");
 		for(int i=0; i<6;i++)
 		{
 			System.out.println(e.getKeyChar()+"\t"+keys[i]);
-			if (e.getKeyChar()==keys[i])
+			if (e.getKeyChar()==keys[i].charAt(0))
 			{
 				paths[i].interact();
 				
@@ -95,9 +119,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
+		System.out.println("a key was released");
 		for(int i=0; i<6;i++)
 		{
-			if (e.getKeyChar()==keys[i])
+			if (e.getKeyChar()==keys[i].charAt(0))
 			{
 				paths[i].interact();
 			}
@@ -106,14 +131,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
+		System.out.println("a key was typed");
 		
 	}
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		//System.out.println("repeat");
-		this.repaint();
-	}
+
 	
 
 }
@@ -140,6 +161,23 @@ class MyCanvas extends Canvas
 	}
 }
 */
+
+class PressedAction extends AbstractAction
+{
+	int index;
+	public PressedAction(int index)
+	{
+		this. index = index;
+	}
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		System.out.println(index+" was pressed");
+		GamePanel.paths[index].interact();
+	}
+	
+}
+
 class Line
 {
 	Paint color;
@@ -187,11 +225,11 @@ class Path //implements KeyListener
 	int [][] bounds;
 	int [] x,y;
 	boolean pressed;
-	char key;
+	String key;
 	Line lLine, rLine;
 	Paint def, press;
 	
-	public Path(Line l1, Line l2, char chr, Paint p1, Paint p2)
+	public Path(Line l1, Line l2, String chr, Paint p1, Paint p2)
 	{
 		x = new int[4];
 		y = new int[4];
