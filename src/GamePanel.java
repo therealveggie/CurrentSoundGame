@@ -3,35 +3,41 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.util.ArrayList;
 
-public class GamePanel extends JPanel implements ActionListener, KeyListener{
+public class GamePanel extends JPanel implements ActionListener{
 	static int[] x,y;
+	static GameInput gi;
 	static ArrayList<ArrayList> bounds;
 	static Timer timer;
 	static Line [] lines;
-	String[] keys;
+	char[] keys;
 	static Path[] paths;
 	//@SuppressWarnings("deprecation")
 	public GamePanel()
 	{
-		addKeyListener(this);
-		//Temp code
+		/////////////////////////////////////////////////////Temp code//////////////////////////////////////////////////////////////////
 		
-		keys = new String[6];
-		keys[0]="s";
-		keys[1]="d";
-		keys[2]="f";
-		keys[3]="j";
-		keys[4]="k";
-		keys[5]="l";
+				keys = new char[6];
+				keys[0]='s';
+				keys[1]='d';
+				keys[2]='f';
+				keys[3]='j';
+				keys[4]='k';
+				keys[5]='l';
+				
+		///////////////////////////////////////////////////end of temp code///////////////////////////////////////////////////////////
+		this.setVisible(true);
+		this.setFocusable(true);
+		this.requestFocus();
 		
-		//end of temp code
+		addKeyListener(new GameInput(keys));
+		
 		
 		paths = new Path[6];
 		timer = new Timer(60, this);
 		this.setBackground(Color.black);
-		//this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
-		this.setSize(800,800);
-		System.out.println(this.getWidth()+"     "+this.getHeight());
+		this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
+		//this.setSize(800,800);
+		//System.out.println(this.getWidth()+"     "+this.getHeight());
 		//x= new int[4];
 		//y=new int [4];
 		//x[0]=0;									y[0]=this.getHeight();
@@ -42,7 +48,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 		int small_shift= (int)(this.getWidth()*0.1/6);
 		int large_shift = (int)(this.getWidth()/6);
 		ArrayList<Integer> temp;
-		PressedAction tmp;
+		
 		//bounds= new ArrayList<ArrayList>();
 		for(int i=0;i<7;i++)
 		{
@@ -70,15 +76,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 			//this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(keys[i].charAt(0), false), tmp);
 		}
 		*/
-		this.setFocusable(true);
-		
-		System.out.println("doing this");
-		this.requestFocusInWindow();
-		System.out.println(this.isRequestFocusEnabled());
 		
 		
 		timer.start();
 		//this.add(new MyCanvas());
+		this.setFocusable(true);
+		//System.out.println("doing this");
+		this.requestFocusInWindow();
+		//System.out.println(this.isRequestFocusEnabled());
 		
 	}
 	public void paintComponent(Graphics g)
@@ -98,42 +103,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 		//System.out.println("repeat");
+		if(!this.hasFocus())
+			this.requestFocus();
 		this.repaint();
 	}
 	
-	
-	@Override
-	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println("a key was pressed");
-		for(int i=0; i<6;i++)
-		{
-			System.out.println(e.getKeyChar()+"\t"+keys[i]);
-			if (e.getKeyChar()==keys[i].charAt(0))
-			{
-				paths[i].interact();
-				
-			}
-		}
-	}
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println("a key was released");
-		for(int i=0; i<6;i++)
-		{
-			if (e.getKeyChar()==keys[i].charAt(0))
-			{
-				paths[i].interact();
-			}
-		}
-	}
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println("a key was typed");
-		
-	}
 
 	
 
@@ -162,21 +136,6 @@ class MyCanvas extends Canvas
 }
 */
 
-class PressedAction extends AbstractAction
-{
-	int index;
-	public PressedAction(int index)
-	{
-		this. index = index;
-	}
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		System.out.println(index+" was pressed");
-		GamePanel.paths[index].interact();
-	}
-	
-}
 
 class Line
 {
@@ -225,15 +184,15 @@ class Path //implements KeyListener
 	int [][] bounds;
 	int [] x,y;
 	boolean pressed;
-	String key;
+	char key;
 	Line lLine, rLine;
 	Paint def, press;
 	
-	public Path(Line l1, Line l2, String chr, Paint p1, Paint p2)
+	public Path(Line l1, Line l2, char keys, Paint p1, Paint p2)
 	{
 		x = new int[4];
 		y = new int[4];
-		this.key = chr;
+		this.key = keys;
 		pressed = false;
 		bounds=new int[4][2];
 		int [][] temp;
@@ -258,9 +217,9 @@ class Path //implements KeyListener
 		
 	}
 	
-	public void interact()
+	public void interact(boolean b)
 	{
-		pressed=!pressed;
+		pressed=b;
 	}
 	
 	public void drawPath(Graphics g)
@@ -275,4 +234,52 @@ class Path //implements KeyListener
 			g2D.fillPolygon(x, y, 4);
 		}
 	}
+}
+
+class GameInput implements KeyListener
+{
+	char[] keys;
+	
+	GameInput(char[] input)
+	{
+		keys = new char[6];
+		for(int i=0;i<6;i++)
+			keys[i]=input[i];
+	}
+
+
+	
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		System.out.println("a key was pressed");
+		for(int i=0; i<6;i++)
+		{
+			System.out.println(e.getKeyChar()+"\t"+keys[i]);
+			if (e.getKeyChar()==keys[i])
+			{
+				GamePanel.paths[i].interact(true);
+				
+			}
+		}
+	}
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		System.out.println("a key was released");
+		for(int i=0; i<6;i++)
+		{
+			if (e.getKeyChar()==keys[i])
+			{
+				GamePanel.paths[i].interact(false);
+			}
+		}
+	}
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		System.out.println("a key was typed");
+		
+	}
+	
 }
