@@ -15,15 +15,13 @@ public class GamePanel extends JPanel implements ActionListener{
 	public GamePanel()
 	{
 		/////////////////////////////////////////////////////Temp code//////////////////////////////////////////////////////////////////
-		
-				keys = new char[6];
-				keys[0]='s';
-				keys[1]='d';
-				keys[2]='f';
-				keys[3]='j';
-				keys[4]='k';
-				keys[5]='l';
-				
+		keys = new char[6];
+		keys[0]='s';
+		keys[1]='d';
+		keys[2]='f';
+		keys[3]='j';
+		keys[4]='k';
+		keys[5]='l';	
 		///////////////////////////////////////////////////end of temp code///////////////////////////////////////////////////////////
 		this.setVisible(true);
 		this.setFocusable(true);
@@ -60,8 +58,9 @@ public class GamePanel extends JPanel implements ActionListener{
 			lines[i]=new Line(temp.get(2),temp.get(3),temp.get(0),temp.get(1),new GradientPaint(0.0f, (float)(this.getHeight()*0.25) , new Color(50,50,50,50), 0.0f, getHeight(), new Color(250,250,250,15)));
 			//bounds.add(temp);
 		}
+		
 		Paint p1 = new GradientPaint(0.0f, (float)(this.getHeight()*0.25) , new Color(10,10,10,200), 0.0f, getHeight(), new Color(100,100,100,55));
-		Paint p2 = new GradientPaint(0.0f, (float)(this.getHeight()*0.25) , new Color(10,10,100,200), 0.0f, getHeight(), new Color(100,100,250,55));
+		Paint p2 = new GradientPaint(0.0f, (float)(this.getHeight()*0.25) , new Color(10,10,10,200), 0.0f, getHeight(), new Color(0,0,100,200));
 		
 		for(int i=0;i<6;i++)
 		{
