@@ -10,7 +10,8 @@ public class CustomFrame extends JFrame {
 		//this.setUndecorated(true);
 		this.setVisible(true);
 		this.setLayout(new BorderLayout());
-		this.add(new GamePanel(),BorderLayout.CENTER);
+		//this.add(new GamePanel(),BorderLayout.CENTER);
+		this.add(new MainMenu(),BorderLayout.CENTER);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	}
 
