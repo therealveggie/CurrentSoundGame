@@ -1,7 +1,7 @@
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-
+import java.awt.image.ImageObserver;
 import java.io.File;
 import javax.imageio.ImageIO;
 
@@ -23,9 +23,9 @@ public class CustomImage
 		}
 	}
 	
-	public void drawFullImage(Graphics g, int x1,int y1,int w,int h)
+	public void drawFullImage(Graphics g, int x1,int y1,int w,int h,ImageObserver obs)
 	{
-		g.drawImage(img, x1, y1, x1+w, y1+h, 0, 0, img.getWidth(), img.getHeight(), null);
+		g.drawImage(img, x1, y1, x1+w, y1+h, 0, 0, img.getWidth(), img.getHeight(), obs);
 		//g.drawImage(img, 0, 0, null);
 	}
 	
