@@ -23,6 +23,17 @@ public class CustomImage
 		}
 	}
 	
+	public CustomImage(BufferedImage img)
+	{
+		this.img=img;
+	}
+	
+	public CustomImage grabSection(int x,int y, int w,int h)
+	{
+		BufferedImage section = img.getSubimage(x, y, w, h);
+		return new CustomImage(section);
+	}
+	
 	public void drawFullImage(Graphics g, int x1,int y1,int w,int h,ImageObserver obs)
 	{
 		g.drawImage(img, x1, y1, x1+w, y1+h, 0, 0, img.getWidth(), img.getHeight(), obs);
