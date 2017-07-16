@@ -34,6 +34,16 @@ public class CustomImage
 		return new CustomImage(section);
 	}
 	
+	public int getWidth()
+	{
+		return img.getWidth();
+	}
+	
+	public int getHeight()
+	{
+		return img.getHeight();
+	}
+	
 	public void drawFullImage(Graphics g, int x1,int y1,int w,int h,ImageObserver obs)
 	{
 		g.drawImage(img, x1, y1, x1+w, y1+h, 0, 0, img.getWidth(), img.getHeight(), obs);
