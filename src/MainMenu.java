@@ -39,15 +39,15 @@ public class MainMenu extends JPanel implements ActionListener, MouseMotionListe
 	{
 		//System.out.println("painting");
 		super.repaint();
-		title.drawFullImage(g, 0, 0, this.getWidth(), this.getHeight(),this);
+		title.drawFullImage(g		, 0							, 0						, this.getWidth()							, this.getHeight()							, this);
 		if(hover[0])
-			play.drawFullImage(g, 45, 210, play.getWidth(), play.getHeight(), this);
+			play.drawFullImage(g	, this.getWidth()*45/1920, this.getHeight()*210/1080, this.getWidth()*play.getWidth()/1920		, this.getHeight()*play.getHeight()/1080	, this);
 		if(hover[1])
-			create.drawFullImage(g, 35, 355, create.getWidth(), create.getHeight(), this);
+			create.drawFullImage(g	, this.getWidth()*35/1920, this.getHeight()*355/1080, this.getWidth()*create.getWidth()/1920	, this.getHeight()*create.getHeight()/1080	, this);
 		if(hover[2])
-			options.drawFullImage(g, 35, 510, options.getWidth(), options.getHeight(), this);
+			options.drawFullImage(g	, this.getWidth()*35/1920, this.getHeight()*510/1080, this.getWidth()*options.getWidth()/1920	, this.getHeight()*options.getHeight()/1080	, this);
 		if(hover[3])
-			quit.drawFullImage(g, 35, 675, quit.getWidth(), quit.getHeight(), this);
+			quit.drawFullImage(g	, this.getWidth()*35/1920, this.getHeight()*675/1080, this.getWidth()*quit.getWidth()/1920		, this.getHeight()*quit.getHeight()/1080	, this);
 		//g.setFont();
 		//g.drawString("Play", x, y);
 	}
@@ -70,16 +70,16 @@ public class MainMenu extends JPanel implements ActionListener, MouseMotionListe
 		mouse_y=e.getY();
 		for (int i=0;i<4;i++)
 			hover[i]=false;
-		if((mouse_x<=265 && mouse_x>=45) && (mouse_y>=210 && mouse_y<=310))
+		if((mouse_x<=this.getWidth()*265/1920 && mouse_x>=this.getWidth()*45/1920) && (mouse_y>=this.getHeight()*210/1080 && mouse_y<=this.getHeight()*310/1080))
 			hover[0]=true;
 		
-		else if((mouse_x<=375 && mouse_x>=35) && (mouse_y>=355 && mouse_y<=430)) //35, 355, 345, 80
+		else if((mouse_x<=this.getWidth()*375/1920 && mouse_x>=this.getWidth()*35/1920) && (mouse_y>=this.getHeight()*355/1080 && mouse_y<=this.getHeight()*450/1080)) //35, 355, 345, 80
 			hover[1]=true;
 		
-		else if((mouse_x<=415 && mouse_x>=35) && (mouse_y>=510 && mouse_y<=610)) //35, 510, 380, 100
+		else if((mouse_x<=this.getWidth()*415/1920 && mouse_x>=this.getWidth()*35/1920) && (mouse_y>=this.getHeight()*510/1080 && mouse_y<=this.getHeight()*610/1080)) //35, 510, 380, 100
 			hover[2]=true;
 		
-		else if((mouse_x<=255 && mouse_x>=35) && (mouse_y>=675 && mouse_y<=775)) //45, 675, 210, 100
+		else if((mouse_x<=this.getWidth()*255/1920 && mouse_x>=this.getWidth()*35/1920) && (mouse_y>=this.getHeight()*675/1080 && mouse_y<=this.getHeight()*775/1080)) //45, 675, 210, 100
 			hover[3]=true;
 		
 		
