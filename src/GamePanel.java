@@ -11,6 +11,10 @@ public class GamePanel extends JPanel implements ActionListener{
 	static Line [] lines;
 	char[] keys;
 	static Path[] paths;
+	
+	// Temp code
+	CustomImage pause;
+	//end of temp code
 	//@SuppressWarnings("deprecation")
 	public GamePanel()
 	{
@@ -76,6 +80,7 @@ public class GamePanel extends JPanel implements ActionListener{
 		}
 		*/
 		
+		pause=new CustomImage("src/Pause1.png");
 		
 		timer.start();
 		//this.add(new MyCanvas());
@@ -88,6 +93,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
+		pause.drawFullImage(g, 0, 0, this.getWidth(), this.getHeight(), this);
 		for(Line line:GamePanel.lines)
 		{
 			line.drawLine(g);
