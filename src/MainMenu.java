@@ -2,10 +2,9 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class MainMenu extends JPanel implements ActionListener, MouseMotionListener{
+public class MainMenu extends JPanel implements MouseMotionListener{
 	CustomImage title,titleSelect,play,create,options,quit;
 	boolean[] hover;
-	Timer timer;
 	int mouse_y,mouse_x;
 
 	public MainMenu()
@@ -15,7 +14,6 @@ public class MainMenu extends JPanel implements ActionListener, MouseMotionListe
 		this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
 		title = new CustomImage("src/Title1.jpg");
 		titleSelect = new CustomImage("src/Title2.jpg");
-		timer = new Timer(60,this);
 		
 		play = titleSelect.grabSection(45, 210, 220, 100);
 		create = titleSelect.grabSection(35, 355, 345, 80);
@@ -30,7 +28,7 @@ public class MainMenu extends JPanel implements ActionListener, MouseMotionListe
 		this.setBackground(Color.black);
 		this.setVisible(true);
 		validate();
-		timer.start();
+		//timer.start();
 		this.repaint();
 		
 	}
@@ -52,11 +50,6 @@ public class MainMenu extends JPanel implements ActionListener, MouseMotionListe
 		//g.drawString("Play", x, y);
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		this.repaint();
-		System.out.println(hover[0]);
-	}
 
 	@Override
 	public void mouseDragged(MouseEvent arg0) {
@@ -81,7 +74,7 @@ public class MainMenu extends JPanel implements ActionListener, MouseMotionListe
 		
 		else if((mouse_x<=this.getWidth()*255/1920 && mouse_x>=this.getWidth()*35/1920) && (mouse_y>=this.getHeight()*675/1080 && mouse_y<=this.getHeight()*775/1080)) //45, 675, 210, 100
 			hover[3]=true;
-		
+		this.repaint();
 		
 	}
 

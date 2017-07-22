@@ -9,11 +9,13 @@ public class GamePanel extends JPanel implements ActionListener{
 	static ArrayList<ArrayList> bounds;
 	static Timer timer;
 	static Line [] lines;
+	private static int time;
+	static boolean pause;
 	char[] keys;
 	static Path[] paths;
 	
 	// Temp code
-	CustomImage pause;
+	//CustomImage pause;
 	//end of temp code
 	//@SuppressWarnings("deprecation")
 	public GamePanel()
@@ -33,9 +35,10 @@ public class GamePanel extends JPanel implements ActionListener{
 		
 		addKeyListener(new GameInput(keys));
 		
-		
+		pause=false;
 		paths = new Path[6];
 		timer = new Timer(60, this);
+		time=0;
 		this.setBackground(Color.black);
 		this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
 		//this.setSize(800,800);
@@ -80,7 +83,7 @@ public class GamePanel extends JPanel implements ActionListener{
 		}
 		*/
 		
-		pause=new CustomImage("src/Pause1.png");
+		//pause=new CustomImage("src/Pause1.png");
 		
 		timer.start();
 		//this.add(new MyCanvas());
@@ -93,7 +96,6 @@ public class GamePanel extends JPanel implements ActionListener{
 	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
-		pause.drawFullImage(g, 0, 0, this.getWidth(), this.getHeight(), this);
 		for(Line line:GamePanel.lines)
 		{
 			line.drawLine(g);
@@ -110,9 +112,24 @@ public class GamePanel extends JPanel implements ActionListener{
 		//System.out.println("repeat");
 		if(!this.hasFocus())
 			this.requestFocus();
+		if(pause)
+			this.pause();
+		
+		time++;
 		this.repaint();
+		
 	}
 	
+	public void pause()
+	{
+		timer.stop();
+		add(new PauseMenu());
+	}
+	
+	public static void resume()
+	{
+		timer.start();
+	}
 
 	
 
@@ -266,6 +283,9 @@ class GameInput implements KeyListener
 				GamePanel.paths[i].interact(true);
 				
 			}
+			
+			if(e.getKeyChar()=='p')
+				GamePanel.pause=true;
 		}
 	}
 	@Override
