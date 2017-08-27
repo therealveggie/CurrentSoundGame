@@ -61,6 +61,7 @@ public class MainMenu extends JPanel implements MouseMotionListener{
 	public void mouseMoved(MouseEvent e) {
 		mouse_x=e.getX();
 		mouse_y=e.getY();
+		System.out.println(mouse_x+" "+mouse_y);
 		for (int i=0;i<4;i++)
 			hover[i]=false;
 		if((mouse_x<=this.getWidth()*265/1920 && mouse_x>=this.getWidth()*45/1920) && (mouse_y>=this.getHeight()*210/1080 && mouse_y<=this.getHeight()*310/1080))

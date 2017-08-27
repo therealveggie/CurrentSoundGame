@@ -11,6 +11,8 @@ public class PauseMenu extends JPanel implements MouseListener, MouseMotionListe
 	{
 		this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
 		
+		System.out.println("this is working, kinda");
+		
 		pause1= new CustomImage("src/Pause1.png");
 		pause2= new CustomImage("src/Pause2.png");
 		

@@ -123,7 +123,9 @@ public class GamePanel extends JPanel implements ActionListener{
 	public void pause()
 	{
 		timer.stop();
-		add(new PauseMenu());
+		this.setVisible(false);
+		this.setLayout(new BorderLayout());
+		add(new PauseMenu(),BorderLayout.CENTER);
 	}
 	
 	public static void resume()
