@@ -2,7 +2,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class MainMenu extends JPanel implements MouseMotionListener{
+public class MainMenu extends JPanel implements MouseMotionListener,MouseListener{
 	CustomImage title,titleSelect,play,create,options,quit;
 	boolean[] hover;
 	int mouse_y,mouse_x;
@@ -11,6 +11,7 @@ public class MainMenu extends JPanel implements MouseMotionListener{
 	{
 		this.setLayout(null);
 		addMouseMotionListener(this);
+		addMouseListener(this);
 		this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
 		title = new CustomImage("src/Title1.jpg");
 		titleSelect = new CustomImage("src/Title2.jpg");
@@ -76,6 +77,45 @@ public class MainMenu extends JPanel implements MouseMotionListener{
 		else if((mouse_x<=this.getWidth()*255/1920 && mouse_x>=this.getWidth()*35/1920) && (mouse_y>=this.getHeight()*675/1080 && mouse_y<=this.getHeight()*775/1080)) //45, 675, 210, 100
 			hover[3]=true;
 		this.repaint();
+		
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		System.out.println(hover[0]);
+		if(hover[0]==true)
+		{
+			this.setVisible(false);
+			this.setLayout(new BorderLayout());
+			GamePanel gm = new GamePanel();
+			this.add(gm, BorderLayout.CENTER);
+			gm.requestFocus();
+		}
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
 		
 	}
 

@@ -13,13 +13,14 @@ public class GamePanel extends JPanel implements ActionListener{
 	static boolean pause;
 	char[] keys;
 	static Path[] paths;
-	
+	static PauseMenu pm;
 	// Temp code
 	//CustomImage pause;
 	//end of temp code
 	//@SuppressWarnings("deprecation")
 	public GamePanel()
 	{
+		System.out.println("am here");
 		/////////////////////////////////////////////////////Temp code//////////////////////////////////////////////////////////////////
 		keys = new char[6];
 		keys[0]='s';
@@ -35,6 +36,7 @@ public class GamePanel extends JPanel implements ActionListener{
 		
 		addKeyListener(new GameInput(keys));
 		
+		pm=new PauseMenu();
 		pause=false;
 		paths = new Path[6];
 		timer = new Timer(60, this);
@@ -106,28 +108,34 @@ public class GamePanel extends JPanel implements ActionListener{
 			path.drawPath(g);
 		}
 	}
+	
+	public void Focus()
+	{
+		this.requestFocus();
+	}
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 		//System.out.println("repeat");
-		if(!this.hasFocus())
-			this.requestFocus();
-		if(pause)
-			this.pause();
+		//if(!this.hasFocus())
+		//	this.requestFocus();
+		//if(pause)
+		//	this.pause();
 		
 		time++;
 		this.repaint();
 		
 	}
-	
+	/*
 	public void pause()
 	{
 		timer.stop();
-		this.setVisible(false);
-		this.setLayout(new BorderLayout());
-		add(new PauseMenu(),BorderLayout.CENTER);
+		this.setVisible(true);
+		//this.setLayout(new BorderLayout());
+		add(pm,BorderLayout.CENTER);
+		pm.setF();
 	}
-	
+	*/
 	public static void resume()
 	{
 		timer.start();
